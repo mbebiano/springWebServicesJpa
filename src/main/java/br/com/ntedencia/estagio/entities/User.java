@@ -29,7 +29,7 @@ public class User implements Serializable {
 	private String password;
 	
 	@OneToMany(mappedBy = "client")
-	@JsonIgnore// Loop de associação de mão dupla
+	@JsonIgnore// Correção Loop de associação de mão dupla
 	private List<Order> orders = new ArrayList<>();
 	
 	public User() {
