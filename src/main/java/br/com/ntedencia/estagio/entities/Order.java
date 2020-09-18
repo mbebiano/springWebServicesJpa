@@ -11,39 +11,44 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 // novo nome para a tabela por conta do conflito, alteração
 @Table(name = "tb_order")
 public class Order implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Long id;
+
+	// Formatar para ISO 8601 a data no arquvio JSON
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
-	
-	//associação muitos para um com User, transformar para chave estrangeira
-	
+
+	// associação muitos para um com User, transformar para chave estrangeira
+
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
-	
+
 	public Order() {
-		
+
 	}
 
-	public Order(Integer id, Instant moment, User client) {
+	public Order(Long id, Instant moment, User client) {
 		this.id = id;
 		this.moment = moment;
 		this.client = client;
 	}
 
-	public Integer getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
@@ -87,8 +92,5 @@ public class Order implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
-	
 
 }
